@@ -1,0 +1,57 @@
+.code-rankings-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.ranking-explanation {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.rankings-table-container {
+  overflow-x: auto;
+}
+
+.rankings-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.rankings-table th, 
+.rankings-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.rankings-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.rankings-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.top-ranked {
+  background-color: #e8f4f8;
+}
+
+.top-ranked:hover {
+  background-color: #d0e8f0;
+}
+
+.delta-values-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.note {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-left: 4px solid #4a69bd;
+  color: #666;
+}

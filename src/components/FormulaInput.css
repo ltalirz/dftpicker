@@ -1,0 +1,40 @@
+.formula-input-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.instruction {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.formula-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 60%;
+  margin-right: 10px;
+  font-family: monospace;
+}
+
+.submit-button {
+  padding: 10px 15px;
+  background-color: #4a69bd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background-color: #1e3799;
+}
+
+.error-message {
+  color: #e74c3c;
+  margin-top: 10px;
+}
