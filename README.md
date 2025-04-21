@@ -65,6 +65,12 @@ Data comes from the ["Verification of the precision of DFT implementations via A
 - `/tests` - Test files
 - `/public` - Static assets
 
+# License
+
+Data in `src/data` is licensed under the [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) license.
+
+Code in `src` is licensed under the [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.html) license.
+
 ## References
 
 - E. Bosoni et al., How to verify the precision of density-functional-theory implementations via reproducible and universal workflows, Nat. Rev. Phys. 6, 45-58 (2024). https://doi.org/10.1038/s42254-023-00655-3
