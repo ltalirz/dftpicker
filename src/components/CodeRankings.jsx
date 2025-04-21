@@ -105,7 +105,7 @@ const CodeRankings = ({ rankings, elements, formula }) => {
             <span style={{ backgroundColor: 'rgba(0, 200, 0, 0.2)', padding: '2px 8px', marginRight: '5px', borderRadius: '2px' }}>Excellent (0-0.3)</span>
             <span style={{ backgroundColor: 'rgba(128, 200, 0, 0.2)', padding: '2px 8px', marginRight: '5px', borderRadius: '2px' }}>Good (0.3-1)</span>
             <span style={{ backgroundColor: 'rgba(255, 120, 0, 0.2)', padding: '2px 8px', marginRight: '5px', borderRadius: '2px' }}>Fair (1-2)</span>
-            <span style={{ backgroundColor: 'rgba(255, 40, 0, 0.2)', padding: '2px 8px', marginRight: '5px', borderRadius: '2px' }}>Poor (>2)</span>
+            <span style={{ backgroundColor: 'rgba(255, 40, 0, 0.2)', padding: '2px 8px', marginRight: '5px', borderRadius: '2px' }}>Poor (2+)</span>
           ).
           Only codes with delta values for all elements in your formula are shown.
         </p>

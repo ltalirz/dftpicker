@@ -39,8 +39,15 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1>DFT Code Picker</h1>
-        <p>Find the most accurate DFT code for your chemical system</p>
+        <div className="header-content">
+          <div className="logo-wrapper">
+            <img src="/dftpicker/logo.svg" alt="DFT Code Picker Logo" className="logo" />
+          </div>
+          <div className="header-text">
+            <h1>DFT Code Picker</h1>
+            <p>Find the most accurate DFT code for your chemical system</p>
+          </div>
+        </div>
       </header>
       
       <main>
@@ -62,7 +69,6 @@ function App() {
         <p>
           Most of this website was written by GitHub Copilot (agent mode) with Claude 3.7 Sonnet.
           <a href="https://github.com/ltalirz/dftpicker" target="_blank" rel="noopener noreferrer">Source code</a>.
-          
         </p>
       </footer>
     </div>
