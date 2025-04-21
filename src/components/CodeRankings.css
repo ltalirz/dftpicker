@@ -26,21 +26,24 @@
   border-bottom: 1px solid #ddd;
 }
 
+/* Ensure text remains readable with colored backgrounds */
+.rankings-table tbody tr td {
+  position: relative;
+  z-index: 1;
+}
+
 .rankings-table th {
   background-color: #f8f9fa;
   font-weight: bold;
 }
 
+/* Add hover effect to more easily see row content */
+.rankings-table tbody tr:hover {
+  filter: brightness(0.95);
+}
+
 .rankings-table tr:hover {
   background-color: #f1f1f1;
-}
-
-.top-ranked {
-  background-color: #e8f4f8;
-}
-
-.top-ranked:hover {
-  background-color: #d0e8f0;
 }
 
 .delta-values-list {
@@ -54,6 +57,11 @@
   background-color: #f8f9fa;
   border-left: 4px solid #4a69bd;
   color: #666;
+}
+
+/* Color Legend Styling */
+.note p {
+  margin: 8px 0;
 }
 
 .citation-link {
