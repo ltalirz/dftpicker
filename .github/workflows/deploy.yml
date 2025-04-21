@@ -32,8 +32,14 @@ jobs:
       - name: Create .nojekyll file
         run: touch dist/.nojekyll
         
+      - name: Debug - List dist directory
+        run: ls -la dist
+        
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
           branch: gh-pages
+          clean: true
+          single-commit: true
+          force: true
