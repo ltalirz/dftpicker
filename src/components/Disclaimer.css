@@ -1,0 +1,28 @@
+.disclaimer {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 4px;
+  padding: 15px;
+  margin: 20px 0;
+  color: #856404;
+}
+
+.disclaimer h3 {
+  margin-top: 0;
+  color: #856404;
+  font-weight: bold;
+}
+
+.disclaimer ul {
+  margin-bottom: 0;
+  padding-left: 20px;
+}
+
+.disclaimer a {
+  color: #775c04;
+  text-decoration: underline;
+}
+
+.disclaimer a:hover {
+  color: #5c4a03;
+}

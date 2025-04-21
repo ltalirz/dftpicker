@@ -1,5 +1,6 @@
 import React from 'react';
 import { getCitationTrendUrl } from '../utils/citationMapping';
+import Disclaimer from './Disclaimer';
 import './CodeRankings.css';
 
 const CodeRankings = ({ rankings, elements, formula }) => {
@@ -27,7 +28,7 @@ const CodeRankings = ({ rankings, elements, formula }) => {
   return (
     <div className="code-rankings-container">
       <h2>DFT Code Rankings for {formula || elements.join(', ')}</h2>
-      
+
       <div className="rankings-table-container">
         <table className="rankings-table">
           <thead>
@@ -81,6 +82,8 @@ const CodeRankings = ({ rankings, elements, formula }) => {
           Only codes with delta values for all elements in your formula are shown.
         </p>
       </div>
+
+      <Disclaimer />
     </div>
   );
 };
