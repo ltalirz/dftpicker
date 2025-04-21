@@ -1,17 +1,27 @@
 import deltaData from '../data/delta_values.json';
 
+// Define all-electron codes
+const ALL_ELECTRON_CODES = [
+  'WIEN2k@(L)APW+lo+LO',
+  'FLEUR@LAPW+LO'
+];
+
 /**
  * Get all available DFT methods from the delta values data
  * 
+ * @param {boolean} includeAllElectron Whether to include all-electron codes
  * @returns {Array} Array of method names
  */
-export function getAllMethods() {
+export function getAllMethods(includeAllElectron = true) {
   const methods = new Set();
   
   // Loop through each element and collect all methods
   Object.values(deltaData.data).forEach(element => {
     Object.keys(element).forEach(method => {
-      methods.add(method);
+      // Filter out all-electron codes if not requested
+      if (includeAllElectron || !ALL_ELECTRON_CODES.includes(method)) {
+        methods.add(method);
+      }
     });
   });
   
@@ -36,18 +46,24 @@ export function getDeltaForElement(element) {
  * Rank DFT methods based on delta values for the given elements
  * 
  * @param {Array} elements Array of element symbols
+ * @param {boolean} includeAllElectron Whether to include all-electron codes
  * @returns {Array} Ranked array of objects with method name and average delta
  */
-export function rankMethodsForElements(elements) {
+export function rankMethodsForElements(elements, includeAllElectron = true) {
   if (!elements || elements.length === 0) {
     return [];
   }
   
-  const methods = getAllMethods();
+  const methods = getAllMethods(includeAllElectron);
   const methodScores = [];
   
   // Calculate delta values for each method
   for (const method of methods) {
+    // Skip all-electron codes if not requested
+    if (!includeAllElectron && ALL_ELECTRON_CODES.includes(method)) {
+      continue;
+    }
+    
     const deltas = {};
     let totalDelta = 0;
     let validDeltas = 0;
@@ -84,4 +100,14 @@ export function rankMethodsForElements(elements) {
   
   // Sort by average delta (lowest first)
   return methodScores.sort((a, b) => a.avgDelta - b.avgDelta);
+}
+
+/**
+ * Determine if a method is an all-electron code
+ * 
+ * @param {string} method The method name
+ * @returns {boolean} True if it's an all-electron code
+ */
+export function isAllElectronCode(method) {
+  return ALL_ELECTRON_CODES.includes(method);
 }

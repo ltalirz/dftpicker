@@ -1,0 +1,72 @@
+.filter-options {
+  max-width: 900px;
+  margin: 10px auto 20px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.checkbox-container input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.checkbox-text {
+  user-select: none;
+}
+
+.info-tooltip {
+  position: relative;
+  margin-left: 8px;
+  display: inline-block;
+}
+
+.info-icon {
+  color: #4a69bd;
+  font-size: 0.85rem;
+  cursor: help;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 300px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+.info-tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Arrow for tooltip */
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}

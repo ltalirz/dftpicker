@@ -17,7 +17,7 @@ const CodeRankings = ({ rankings, elements }) => {
         <h2>No matching DFT codes for {elements.join(', ')}</h2>
         <p className="ranking-explanation">
           No DFT codes were found that have delta values for all elements in your formula.
-          Try a different chemical formula with more common elements.
+          Try a different chemical formula with more common elements, or enable all-electron codes.
         </p>
       </div>
     );
