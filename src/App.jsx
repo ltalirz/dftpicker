@@ -60,7 +60,10 @@ function App() {
       
       <footer className="footer">
         <p>
-          99% of this website was written by GitHub Copilot (agent mode) with Claude 3.7 Sonnet.</p>
+          Most of this website was written by GitHub Copilot (agent mode) with Claude 3.7 Sonnet.
+          <a href="https://github.com/ltalirz/dftpicker" target="_blank" rel="noopener noreferrer">Source code</a>.
+          
+        </p>
       </footer>
     </div>
   );

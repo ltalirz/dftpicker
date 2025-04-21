@@ -1,6 +1,6 @@
 # DFT Code Picker
 
-A web application to help researchers find the most accurate Density Functional Theory (DFT) code for a particular chemical system.t
+A web application to help researchers find the most accurate Density Functional Theory (DFT) code for a particular chemical system.
 
 🔗 **Live demo**: [ltalirz.github.io/dftpicker](https://ltalirz.github.io/dftpicker)
 
