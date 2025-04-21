@@ -33,6 +33,8 @@ const MethodsAccordion = () => {
             We pick the average all-electron equation of state as the reference (therefore, the two all-electron codes are always tied for ranks 1 and 2, if included).
             For elements where multiple crystal structures are considered (including their oxides), we use the average delta value 
             across those structures.
+            Furthermore, for a given chemical formula we use the average delta
+            value across all elements in the formula, weighted by their occurrence in the formula.
           </p>
           
           <p>
