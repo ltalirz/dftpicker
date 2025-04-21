@@ -36,11 +36,6 @@ const MethodsAccordion = () => {
           </p>
           
           <p>
-            All calculations were performed with the PBE functional, so these results reflect the accuracy of the implementation
-            and the basis sets/pseudopotentials rather than of the underlying theory.
-          </p>
-
-          <p>
             Citation trends (<span className="trend-icon">📈</span>) are provided by 
             <a href="https://atomistic.software" target="_blank" rel="noopener noreferrer"> atomistic.software</a>.
           </p>
