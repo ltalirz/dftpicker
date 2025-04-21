@@ -8,9 +8,9 @@ const citationMapping = {
   'FLEUR@LAPW+LO': 'FLEUR',
   'GPAW@PW|PAW-v0.9.20000': 'GPAW',
   'CASTEP@PW|C19MK2': 'CASTEP',
-  'Quantum ESPRESSO@PW|SSSP-prec-v1.3': 'Quantum-ESPRESSO',
+  'Quantum ESPRESSO@PW|SSSP-prec-v1.3': 'Quantum ESPRESSO',
   'SIESTA@AtOrOptDiamond|PseudoDojo-v0.4': 'SIESTA',
-  'SIRIUS/CP2K@PW|SSSP-prec-v1.2': 'SIRIUS',
+  'SIRIUS/CP2K@PW|SSSP-prec-v1.2': 'Quantum ESPRESSO',
   'VASP@PW|GW-PAW54*': 'VASP',
   'WIEN2k@(L)APW+lo+LO': 'WIEN2k'
 };
@@ -23,11 +23,12 @@ const citationMapping = {
  */
 export function getCitationTrendUrl(codeName) {
   const identifier = citationMapping[codeName];
+  const encodedCodeName = encodeURIComponent(identifier);
   if (!identifier) {
     return null;
   }
   
-  return `https://atomistic.software/#/charts/${identifier}`;
+  return `https://atomistic.software/#/charts/${encodedCodeName}`;
 }
 
 export default citationMapping;
