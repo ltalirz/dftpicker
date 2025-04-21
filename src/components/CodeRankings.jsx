@@ -45,12 +45,12 @@ const CodeRankings = ({ rankings, elements, formula }) => {
               <tr key={code.name} className={index === 0 ? 'top-ranked' : ''}>
                 <td>{index + 1}</td>
                 <td>{code.name}</td>
-                <td>{code.avgDelta.toFixed(2)}</td>
+                <td>{code.avgDelta.toFixed(1)}</td>
                 <td>
                   <ul className="delta-values-list">
                     {Object.entries(code.deltas).map(([element, value]) => (
                       <li key={element}>
-                        {element}: {value.toFixed(2)}
+                        {element}: {value.toFixed(1)}
                       </li>
                     ))}
                   </ul>
