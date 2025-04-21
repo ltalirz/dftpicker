@@ -1,12 +1,15 @@
 # DFT Code Picker
 
-A web application to help researchers find the most accurate Density Functional Theory (DFT) code for their specific chemical system.
+A web application to help researchers find the most accurate Density Functional Theory (DFT) code for a particular chemical system.t
 
 🔗 **Live demo**: [ltalirz.github.io/dftpicker](https://ltalirz.github.io/dftpicker)
 
 ## About
 
-DFT Code Picker uses delta values from the "Verification of DFT Implementations" project to rank different DFT codes based on their accuracy for specific elements. The tool helps researchers make informed decisions about which DFT code to use for their calculations.
+DFT Code Picker uses delta values from the "Verification of DFT Implementations" project to rank different DFT codes based on their accuracy for specific elements. 
+
+I've wanted to write something like this since ACWF was released but always put it off until the agent mode of GiHub Copilot came along.
+With Claude Sonnet 3.7, the app was done in about 4 hours. Figuring out the upload to Github took almost as long as writing the app itself. Crazy.
 
 ### Features
 
