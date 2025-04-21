@@ -6,8 +6,39 @@
 }
 
 .instruction {
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.drag-drop-instruction {
   margin-bottom: 20px;
   color: #666;
+  font-style: italic;
+}
+
+.form-container {
+  position: relative;
+  padding: 20px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.form-container.dragging {
+  border-color: #4a69bd;
+  background-color: rgba(74, 105, 189, 0.05);
+}
+
+.form-container.processing {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.input-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 .formula-input {
@@ -16,7 +47,6 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 60%;
-  margin-right: 10px;
   font-family: monospace;
 }
 
@@ -37,4 +67,72 @@
 .error-message {
   color: #e74c3c;
   margin-top: 10px;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+.drop-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(74, 105, 189, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.drop-overlay p {
+  font-size: 18px;
+  color: #4a69bd;
+  font-weight: bold;
+}
+
+.processing-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.processing-overlay p {
+  font-size: 16px;
+  color: #333;
+}
+
+.file-options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.browse-button {
+  padding: 6px 12px;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+}
+
+.browse-button:hover {
+  background-color: #e9ecef;
+}
+
+.supported-formats {
+  font-size: 14px;
+  color: #777;
 }

@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { extractFormulaFromFile } from '../utils/fileParser.js';
 import './FormulaInput.css';
 
 const FormulaInput = ({ onSubmit }) => {
   const [formula, setFormula] = useState('');
   const [error, setError] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const inputRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,25 +28,158 @@ const FormulaInput = ({ onSubmit }) => {
     onSubmit(formula);
   };
 
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = async (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    setError('');
+    
+    try {
+      const files = e.dataTransfer.files;
+      if (files.length === 0) return;
+      
+      // Only process the first file
+      const file = files[0];
+      
+      // Check if it's an XYZ or CIF file
+      const fileName = file.name.toLowerCase();
+      if (!fileName.endsWith('.xyz') && !fileName.endsWith('.cif')) {
+        setError('Unsupported file format. Please upload an XYZ or CIF file.');
+        return;
+      }
+      
+      setIsProcessing(true);
+      
+      // Read the file content
+      const content = await readFileContent(file);
+      
+      // Extract the formula from the file
+      const extractedFormula = extractFormulaFromFile(content, file.name);
+      
+      // Set the formula
+      setFormula(extractedFormula);
+      
+      // Focus the input field
+      inputRef.current.focus();
+      
+    } catch (error) {
+      console.error('Error processing file:', error);
+      setError(error.message || 'Failed to process the file. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleFileInputChange = async (e) => {
+    const files = e.target.files;
+    if (files.length === 0) return;
+    
+    try {
+      setError('');
+      setIsProcessing(true);
+      
+      // Only process the first file
+      const file = files[0];
+      
+      // Read the file content
+      const content = await readFileContent(file);
+      
+      // Extract the formula from the file
+      const extractedFormula = extractFormulaFromFile(content, file.name);
+      
+      // Set the formula
+      setFormula(extractedFormula);
+      
+    } catch (error) {
+      console.error('Error processing file:', error);
+      setError(error.message || 'Failed to process the file. Please try again.');
+    } finally {
+      setIsProcessing(false);
+      // Reset the file input so the same file can be selected again
+      e.target.value = '';
+    }
+  };
+
+  // Helper function to read file content
+  const readFileContent = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => resolve(event.target.result);
+      reader.onerror = (error) => reject(error);
+      reader.readAsText(file);
+    });
+  };
+
+  const handleBrowseClick = () => {
+    document.getElementById('file-input').click();
+  };
+
   return (
     <div className="formula-input-container">
       <h2>Enter a Chemical Formula</h2>
-      <p className="instruction">
-        Example: Fe2O3, CaCO3, LiNiMnCoO2
+      <p className="drag-drop-instruction">
+        Or drag & drop an XYZ or CIF file to extract the formula
       </p>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={formula}
-          onChange={(e) => setFormula(e.target.value)}
-          placeholder="e.g., H2O"
-          className="formula-input"
-          aria-label="Chemical formula"
+      
+      <form 
+        onSubmit={handleSubmit}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        className={`form-container ${isDragging ? 'dragging' : ''} ${isProcessing ? 'processing' : ''}`}
+      >
+        <div className="input-row">
+          <input
+            type="text"
+            value={formula}
+            onChange={(e) => setFormula(e.target.value)}
+            placeholder="e.g., Fe2O3, CaCO3, LiNiMnCoO2"
+            className="formula-input"
+            aria-label="Chemical formula"
+            ref={inputRef}
+          />
+          <button type="submit" className="submit-button">
+            Rank DFT Codes
+          </button>
+        </div>
+        
+        <input 
+          type="file" 
+          id="file-input" 
+          className="hidden-file-input" 
+          accept=".xyz,.cif" 
+          onChange={handleFileInputChange}
         />
-        <button type="submit" className="submit-button">
-          Rank DFT Codes
-        </button>
+        
+        {isDragging && (
+          <div className="drop-overlay">
+            <p>Drop your structure file here</p>
+          </div>
+        )}
+        
+        {isProcessing && (
+          <div className="processing-overlay">
+            <p>Processing file...</p>
+          </div>
+        )}
       </form>
+      
+      <div className="file-options">
+        <button type="button" onClick={handleBrowseClick} className="browse-button">
+          Browse for structure file
+        </button>
+        <span className="supported-formats">Supported formats: XYZ, CIF</span>
+      </div>
+      
       {error && <p className="error-message">{error}</p>}
     </div>
   );
