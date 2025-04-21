@@ -62,9 +62,9 @@ Data comes from the ["Verification of the precision of DFT implementations via A
 - `/tests` - Test files
 - `/public` - Static assets
 
-## Acknowledgements
+## References
 
-- Delta values based on the [Verification of DFT Implementations via AiiDA Common Workflows](https://doi.org/10.24435/materialscloud:s4-3h)
+- E. Bosoni et al., How to verify the precision of density-functional-theory implementations via reproducible and universal workflows, Nat. Rev. Phys. 6, 45-58 (2024). https://doi.org/10.1038/s42254-023-00655-3
+- Delta values based on the [Verification of DFT Implementations via AiiDA Common Workflows](https://doi.org/10.24435/materialscloud:s4-3h) data on the Materials Cloud Archive
 - Citation trends from [atomistic.software](https://atomistic.software)
 - Built with [React](https://reactjs.org) + [Vite](https://vitejs.dev)
-
