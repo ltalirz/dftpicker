@@ -36,7 +36,7 @@ export function getDeltaForElement(element) {
  * Rank DFT methods based on delta values for the given elements
  * 
  * @param {Array} elements Array of element symbols
- * @returns {Array} Ranked array of objects with method name and total delta
+ * @returns {Array} Ranked array of objects with method name and average delta
  */
 export function rankMethodsForElements(elements) {
   if (!elements || elements.length === 0) {
@@ -46,13 +46,14 @@ export function rankMethodsForElements(elements) {
   const methods = getAllMethods();
   const methodScores = [];
   
-  // Calculate total delta for each method
+  // Calculate delta values for each method
   for (const method of methods) {
     const deltas = {};
     let totalDelta = 0;
     let validDeltas = 0;
+    let hasAllElements = true;
     
-    // Sum delta values for all elements
+    // Check if the method has delta values for all elements
     for (const element of elements) {
       const elementDelta = getDeltaForElement(element);
       if (elementDelta && elementDelta[method] !== null && elementDelta[method] !== undefined) {
@@ -61,29 +62,26 @@ export function rankMethodsForElements(elements) {
         validDeltas++;
       } else {
         deltas[element] = null;
+        hasAllElements = false; // Mark this method as missing at least one element
       }
     }
     
-    // Only include methods that have delta values for at least one element
-    if (validDeltas > 0) {
+    // Only include methods that have delta values for ALL elements in the formula
+    if (validDeltas > 0 && hasAllElements) {
+      // Calculate average delta value (meV per atom)
+      const avgDelta = totalDelta / validDeltas;
+      
       methodScores.push({
         name: method,
-        totalDelta,
+        totalDelta: totalDelta,
+        avgDelta: avgDelta,
         deltas,
-        validDeltas, // Track how many elements have valid data
+        validDeltas, // This should equal elements.length for all included methods
         totalElements: elements.length // Total number of elements in the formula
       });
     }
   }
   
-  // Sort by total delta (lowest first)
-  return methodScores
-    .sort((a, b) => {
-      // Primary sort: most valid deltas (highest first)
-      const validDeltasDiff = b.validDeltas - a.validDeltas;
-      if (validDeltasDiff !== 0) return validDeltasDiff;
-      
-      // Secondary sort: lowest total delta
-      return a.totalDelta - b.totalDelta;
-    });
+  // Sort by average delta (lowest first)
+  return methodScores.sort((a, b) => a.avgDelta - b.avgDelta);
 }

@@ -2,16 +2,16 @@ import json
 import os
 from utils import calculate_delta
 
-def compute_max_delta_values(input_json_path):
+def compute_average_delta_values(input_json_path):
     """
     For each element in the raw.json file, compute the Delta value between each method
-    and the all-electron average, then take the maximum across crystal structures.
+    and the all-electron average, then take the average across crystal structures.
     
     Args:
         input_json_path: Path to the input data.json file
         
     Returns:
-        Dictionary with the structure data -> element -> method -> max delta value
+        Dictionary with the structure data -> element -> method -> average delta value
     """
     # Load the input JSON file
     with open(input_json_path, 'r') as f:
@@ -139,11 +139,13 @@ def compute_max_delta_values(input_json_path):
                 except Exception as e:
                     print(f"Error calculating delta for {element}, {method}, {struct_type}: {e}")
             
-            # Store the maximum delta value if there are any valid delta values
+            # Store the average delta value if there are any valid delta values
             if delta_values:
-                result["data"][element][method] = max(delta_values)
+                # Calculate the average delta value across all crystal structures
+                avg_delta = sum(delta_values) / len(delta_values)
+                result["data"][element][method] = avg_delta
                 successful_calculations += 1
-                print(f"Max delta for {element}, {method}: {max(delta_values)}")
+                print(f"Average delta for {element}, {method}: {avg_delta} (from {len(delta_values)} structures)")
             else:
                 result["data"][element][method] = None
                 print(f"No valid delta values for {element}, {method}")
@@ -161,8 +163,8 @@ def main():
     input_json_path = os.path.join(script_dir, 'raw.json')
     output_json_path = os.path.join(script_dir, 'delta_values.json')
     
-    # Compute the max delta values
-    delta_values = compute_max_delta_values(input_json_path)
+    # Compute the average delta values
+    delta_values = compute_average_delta_values(input_json_path)
     
     # Write the results to a new JSON file
     with open(output_json_path, 'w') as f:
