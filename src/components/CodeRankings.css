@@ -55,3 +55,46 @@
   border-left: 4px solid #4a69bd;
   color: #666;
 }
+
+.citation-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #4a69bd;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #f0f4ff;
+  transition: background-color 0.2s;
+}
+
+.citation-link:hover {
+  background-color: #e0e8ff;
+}
+
+.trend-icon {
+  font-size: 1.1rem;
+}
+
+.no-citation-data {
+  color: #999;
+  font-style: italic;
+  font-size: 0.9em;
+  display: inline-block;
+  padding: 4px 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .rankings-table th:nth-child(4),
+  .rankings-table td:nth-child(4) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .rankings-table th:nth-child(5),
+  .rankings-table td:nth-child(5) {
+    display: none;
+  }
+}

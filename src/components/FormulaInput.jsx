@@ -2,11 +2,12 @@ import React, { useState, useRef } from 'react';
 import { extractFormulaFromFile } from '../utils/fileParser.js';
 import './FormulaInput.css';
 
-const FormulaInput = ({ onSubmit }) => {
+const FormulaInput = ({ onSubmit, initialIncludeAllElectron = false }) => {
   const [formula, setFormula] = useState('');
   const [error, setError] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [includeAllElectron, setIncludeAllElectron] = useState(initialIncludeAllElectron);
   const inputRef = useRef(null);
 
   const handleSubmit = (e) => {
@@ -25,7 +26,11 @@ const FormulaInput = ({ onSubmit }) => {
     }
 
     setError('');
-    onSubmit(formula);
+    onSubmit(formula, includeAllElectron);
+  };
+
+  const toggleAllElectron = () => {
+    setIncludeAllElectron(!includeAllElectron);
   };
 
   const handleDragOver = (e) => {
@@ -152,6 +157,23 @@ const FormulaInput = ({ onSubmit }) => {
           </button>
         </div>
         
+        <div className="options-row">
+          <label className="checkbox-container">
+            <input 
+              type="checkbox" 
+              checked={includeAllElectron} 
+              onChange={toggleAllElectron}
+            />
+            <span className="checkbox-text">Include all-electron codes (WIEN2k, FLEUR)</span>
+            <div className="info-tooltip">
+              <span className="info-icon">ⓘ</span>
+              <span className="tooltip-text">
+                All-electron codes generally offer high accuracy but have a steeper learning curve and higher computational cost.
+              </span>
+            </div>
+          </label>
+        </div>
+        
         <input 
           type="file" 
           id="file-input" 
@@ -172,13 +194,6 @@ const FormulaInput = ({ onSubmit }) => {
           </div>
         )}
       </form>
-      
-      <div className="file-options">
-        <button type="button" onClick={handleBrowseClick} className="browse-button">
-          Browse for structure file
-        </button>
-        <span className="supported-formats">Supported formats: XYZ, CIF</span>
-      </div>
       
       {error && <p className="error-message">{error}</p>}
     </div>

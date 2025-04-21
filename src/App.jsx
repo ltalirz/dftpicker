@@ -3,7 +3,6 @@ import FormulaInput from './components/FormulaInput.jsx';
 import CodeRankings from './components/CodeRankings.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import MethodsAccordion from './components/MethodsAccordion.jsx';
-import FilterOptions from './components/FilterOptions.jsx';
 import { parseFormula, getElementsArray } from './utils/formulaParser.js';
 import { rankMethodsForElements } from './services/deltaService.js';
 import './App.css';
@@ -11,11 +10,15 @@ import './App.css';
 function App() {
   const [rankings, setRankings] = useState([]);
   const [elements, setElements] = useState([]);
+  const [formula, setFormula] = useState('');
   const [includeAllElectron, setIncludeAllElectron] = useState(false);
 
-  const handleFormulaSubmit = (formula) => {
+  const handleFormulaSubmit = (inputFormula, includeAllElectron) => {
+    // Save the original formula
+    setFormula(inputFormula);
+    
     // Parse the formula to get elements
-    const parsedFormula = parseFormula(formula);
+    const parsedFormula = parseFormula(inputFormula);
     const elementArray = getElementsArray(parsedFormula);
     
     // Check if any elements were found
@@ -30,17 +33,7 @@ function App() {
     // Update state
     setElements(elementArray);
     setRankings(rankedMethods);
-  };
-
-  const handleToggleAllElectron = () => {
-    const newValue = !includeAllElectron;
-    setIncludeAllElectron(newValue);
-    
-    // Re-rank with the new filter if we already have elements
-    if (elements.length > 0) {
-      const rankedMethods = rankMethodsForElements(elements, newValue);
-      setRankings(rankedMethods);
-    }
+    setIncludeAllElectron(includeAllElectron);
   };
 
   return (
@@ -51,22 +44,23 @@ function App() {
       </header>
       
       <main>
-        <FormulaInput onSubmit={handleFormulaSubmit} />
-        <FilterOptions 
-          includeAllElectron={includeAllElectron}
-          onToggleAllElectron={handleToggleAllElectron}
+        <FormulaInput 
+          onSubmit={handleFormulaSubmit} 
+          initialIncludeAllElectron={includeAllElectron}
         />
         <MethodsAccordion />
         <ErrorBoundary>
-          <CodeRankings rankings={rankings} elements={elements} />
+          <CodeRankings 
+            rankings={rankings} 
+            elements={elements}
+            formula={formula}
+          />
         </ErrorBoundary>
       </main>
       
       <footer className="footer">
         <p>
-          Based on the Δ-DFT benchmark for solid-state calculations. 
-          <a href="https://doi.org/10.24435/materialscloud:s4-3h" target="_blank" rel="noopener noreferrer">Learn more</a>
-        </p>
+          99% of this website was written by GitHub Copilot (agent mode) with Claude 3.7 Sonnet.</p>
       </footer>
     </div>
   );

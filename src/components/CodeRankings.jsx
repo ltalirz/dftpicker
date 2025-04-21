@@ -1,7 +1,8 @@
 import React from 'react';
+import { getCitationTrendUrl } from '../utils/citationMapping';
 import './CodeRankings.css';
 
-const CodeRankings = ({ rankings, elements }) => {
+const CodeRankings = ({ rankings, elements, formula }) => {
   // Check if the user has submitted a formula yet
   const hasSubmittedFormula = elements && elements.length > 0;
   
@@ -14,7 +15,7 @@ const CodeRankings = ({ rankings, elements }) => {
   if (!rankings || rankings.length === 0) {
     return (
       <div className="code-rankings-container">
-        <h2>No matching DFT codes for {elements.join(', ')}</h2>
+        <h2>No matching DFT codes for {formula || elements.join(', ')}</h2>
         <p className="ranking-explanation">
           No DFT codes were found that have delta values for all elements in your formula.
           Try a different chemical formula with more common elements, or enable all-electron codes.
@@ -25,12 +26,7 @@ const CodeRankings = ({ rankings, elements }) => {
 
   return (
     <div className="code-rankings-container">
-      <h2>DFT Code Rankings for {elements.join(', ')}</h2>
-      <p className="ranking-explanation">
-        Codes are ranked by average delta value (lowest is best). Delta measures the accuracy 
-        of the code compared to all-electron reference calculations in meV/atom.
-        Only codes with delta values for all elements in your formula are shown.
-      </p>
+      <h2>DFT Code Rankings for {formula || elements.join(', ')}</h2>
       
       <div className="rankings-table-container">
         <table className="rankings-table">
@@ -40,6 +36,7 @@ const CodeRankings = ({ rankings, elements }) => {
               <th>DFT Code</th>
               <th>Average Delta (meV/atom)</th>
               <th>Delta Values per Element</th>
+              <th>Citation Trend</th>
             </tr>
           </thead>
           <tbody>
@@ -57,6 +54,21 @@ const CodeRankings = ({ rankings, elements }) => {
                     ))}
                   </ul>
                 </td>
+                <td>
+                  {getCitationTrendUrl(code.name) ? (
+                    <a 
+                      href={getCitationTrendUrl(code.name)} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="citation-link"
+                      title="View citation trend on atomistic.software"
+                    >
+                      <span className="trend-icon">📈</span>
+                    </a>
+                  ) : (
+                    <span className="no-citation-data">-</span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -65,8 +77,8 @@ const CodeRankings = ({ rankings, elements }) => {
       
       <div className="note">
         <p>
-          <strong>Note:</strong> Lower delta values indicate better accuracy. 
-          Values are reported in meV/atom.
+          <strong>Note:</strong> Lower delta values indicate better agreement with all-electron calculations. 
+          Only codes with delta values for all elements in your formula are shown.
         </p>
       </div>
     </div>
