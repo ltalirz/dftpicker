@@ -21,17 +21,17 @@ const MethodsAccordion = () => {
       {isOpen && (
         <div className="accordion-content">
           <p>
-            This tool ranks DFT codes based on the <a href="https://molmod.ugent.be/deltacodesdft" target="_blank">Δ-value</a> (delta value), which measures the agreement of 
+            This tool ranks DFT codes based on the <a href="https://molmod.ugent.be/deltacodesdft" target="_blank">Δ-value</a> (delta value), which measures their agreement on 
             the equation of state curve for selected elemental crystals.
-            Lower delta values indicate better agreement with reference calculations and generally suggest better 
+            Here, lower delta values indicate better agreement with reference calculations and generally suggest better 
             accuracy for the given element.
           </p>
           
           <p>
             This tool is based on <a href="https://doi.org/10.24435/materialscloud:s4-3h" target="_blank" rel="noopener noreferrer">
             data from the "Verification of the precision of DFT implementations via AiiDA common workflows" (ACWF) paper</a> (see also <a href="https://github.com/materialscloud-org/acwf-verification">GitHub</a>).
-            We pick the average all-electron equation of state as the reference, and thus the two all-electron codes are always tied for ranks 1 and 2, if included.
-            Where multiple crystal structures are considered (including oxides), we use the average delta value 
+            We pick the average all-electron equation of state as the reference (therefore, the two all-electron codes are always tied for ranks 1 and 2, if included).
+            For elements where multiple crystal structures are considered (including their oxides), we use the average delta value 
             across those structures.
           </p>
           
