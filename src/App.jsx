@@ -55,14 +55,22 @@ function App() {
           onSubmit={handleFormulaSubmit} 
           initialIncludeAllElectron={includeAllElectron}
         />
-        <MethodsAccordion />
-        <ErrorBoundary>
-          <CodeRankings 
-            rankings={rankings} 
-            elements={elements}
-            formula={formula}
-          />
-        </ErrorBoundary>
+        
+        {/* Add margin between FormulaInput and MethodsAccordion */}
+        <div style={{ marginTop: '2rem' }}>
+          <MethodsAccordion />
+        </div>
+        
+        {/* Add more significant spacing before results section when there are results */}
+        <div style={{ marginTop: rankings.length > 0 ? '3rem' : '1rem' }}>
+          <ErrorBoundary>
+            <CodeRankings 
+              rankings={rankings} 
+              elements={elements}
+              formula={formula}
+            />
+          </ErrorBoundary>
+        </div>
       </main>
       
       <footer className="footer">
