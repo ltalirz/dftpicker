@@ -71,116 +71,148 @@ const CodeRankings = ({ rankings, elements, formula }) => {
     return delta.toFixed(2);
   };
 
+  // Updated helper component for color indicator with tooltip
+  const ColorIndicator = ({ categoryName, className, description }) => (
+    <div className="color-indicator-wrapper" data-tooltip={description}>
+      <span className={`color-indicator ${className}`}></span>
+      <span className="color-indicator-text">{categoryName}</span>
+    </div>
+  );
+
   return (
     <div className="rankings-container">
       <h2>Results for {formula}</h2>
-      <p>Elements analyzed: {elements.join(', ')}</p>
       
       {(categoryNames.length > 0 || incomplete.length > 0) ? (
-        <table className="rankings-table">
-          <thead>
-            <tr>
-              <th>DFT Code</th>
-              <th>Average Delta (meV/atom)</th>
-              <th>Delta Values per Element</th>
-              <th>Citation Trend</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Complete data sections */}
-            {categoryNames.map((categoryName, categoryIndex) => (
-              <React.Fragment key={categoryName}>
-                {/* Add category label as a non-table-row element */}
-                {categories[categoryName].map((method, index) => (
-                  <tr key={`complete-${categoryIndex}-${index}`} className={`category-${getCategoryClass(categoryName)}`}>
-                    <td>{method.originalCode || method.code}</td>
-                    <td className={getCategoryClass(categoryName)}>
-                      {formatDelta(method.avgDelta)}
-                    </td>
-                    <td>
-                      <ul className="delta-values-list">
-                        {Object.entries(method.deltaValues || {}).map(([element, value]) => (
-                          <li key={element}>
-                            {element}: {formatDelta(value)}
-                          </li>
-                        ))}
-                      </ul>
-                    </td>
-                    <td className="citation-cell">
-                      {getCitationTrendUrl(method.code.split('@')[0]) ? (
-                        <a
-                          href={getCitationTrendUrl(method.code.split('@')[0])}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="citation-link"
-                          title="View citation trend on atomistic.software"
-                        >
-                          <span className="trend-icon">📈</span>
-                        </a>
-                      ) : (
-                        <span className="no-citation-data">-</span>
-                      )}
-                    </td>
+        <>
+          {/* Enhanced color legend with descriptions */}
+          <div className="color-legend">
+            <ColorIndicator 
+              categoryName="Excellent" 
+              className="excellent" 
+              description="Δ < 0.3 meV/atom: Highly accurate methods for the given elements"
+            />
+            <ColorIndicator 
+              categoryName="Good" 
+              className="good" 
+              description="0.3 ≤ Δ < 1 meV/atom: Reliable methods with good accuracy"
+            />
+            <ColorIndicator 
+              categoryName="Fair" 
+              className="fair" 
+              description="1 ≤ Δ < 2 meV/atom: Acceptable accuracy for most applications"
+            />
+            <ColorIndicator 
+              categoryName="Poor" 
+              className="poor" 
+              description="Δ ≥ 2 meV/atom: Lower accuracy, use with caution"
+            />
+          </div>
+          
+          <table className="rankings-table">
+            <thead>
+              <tr>
+                <th>DFT Code</th>
+                <th>Average Delta (meV/atom)</th>
+                <th>Delta Values per Element</th>
+                <th>Citation Trend</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* Complete data sections */}
+              {categoryNames.map((categoryName, categoryIndex) => (
+                <React.Fragment key={categoryName}>
+                  {categories[categoryName].map((method, index) => (
+                    <tr key={`complete-${categoryIndex}-${index}`} className={`category-${getCategoryClass(categoryName)}`}>
+                      <td>{method.originalCode || method.code}</td>
+                      <td className={getCategoryClass(categoryName)}>
+                        {formatDelta(method.avgDelta)}
+                      </td>
+                      <td>
+                        <ul className="delta-values-list">
+                          {Object.entries(method.deltaValues || {}).map(([element, value]) => (
+                            <li key={element}>
+                              {element}: {formatDelta(value)}
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td className="citation-cell">
+                        {getCitationTrendUrl(method.code.split('@')[0]) ? (
+                          <a
+                            href={getCitationTrendUrl(method.code.split('@')[0])}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="citation-link"
+                            title="View citation trend on atomistic.software"
+                          >
+                            <span className="trend-icon">📈</span>
+                          </a>
+                        ) : (
+                          <span className="no-citation-data">-</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                  {/* Add a spacer row except after the last category */}
+                  {categoryIndex < categoryNames.length - 1 && (
+                    <tr className="category-spacer">
+                      <td colSpan="4"></td>
+                    </tr>
+                  )}
+                </React.Fragment>
+              ))}
+              
+              {/* Incomplete data section */}
+              {incomplete.length > 0 && (
+                <React.Fragment>
+                  {/* Add a spacer row before incomplete section if there was complete data */}
+                  {categoryNames.length > 0 && (
+                    <tr className="category-spacer">
+                      <td colSpan="4"></td>
+                    </tr>
+                  )}
+                  {/* Add a label for the incomplete section */}
+                  <tr className="category-label incomplete-label">
+                    <td colSpan="4">Codes with missing data for some elements</td>
                   </tr>
-                ))}
-                {/* Add a spacer row except after the last category */}
-                {categoryIndex < categoryNames.length - 1 && (
-                  <tr className="category-spacer">
-                    <td colSpan="4"></td>
-                  </tr>
-                )}
-              </React.Fragment>
-            ))}
-            
-            {/* Incomplete data section */}
-            {incomplete.length > 0 && (
-              <React.Fragment>
-                {/* Add a spacer row before incomplete section if there was complete data */}
-                {categoryNames.length > 0 && (
-                  <tr className="category-spacer">
-                    <td colSpan="4"></td>
-                  </tr>
-                )}
-                {/* Add a label for the incomplete section */}
-                <tr className="category-label incomplete-label">
-                  <td colSpan="4">Codes with missing data for some elements</td>
-                </tr>
-                {incomplete.map((method, index) => (
-                  <tr key={`incomplete-${index}`} className="category-incomplete">
-                    <td>{method.originalCode || method.code}</td>
-                    <td className="incomplete">
-                      {formatDelta(method.avgDelta)}
-                    </td>
-                    <td>
-                      <ul className="delta-values-list">
-                        {Object.entries(method.deltaValues || {}).map(([element, value]) => (
-                          <li key={element}>
-                            {element}: {formatDelta(value)}
-                          </li>
-                        ))}
-                      </ul>
-                    </td>
-                    <td className="citation-cell">
-                      {getCitationTrendUrl(method.code.split('@')[0]) ? (
-                        <a
-                          href={getCitationTrendUrl(method.code.split('@')[0])}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="citation-link"
-                          title="View citation trend on atomistic.software"
-                        >
-                          <span className="trend-icon">📈</span>
-                        </a>
-                      ) : (
-                        <span className="no-citation-data">-</span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </React.Fragment>
-            )}
-          </tbody>
-        </table>
+                  {incomplete.map((method, index) => (
+                    <tr key={`incomplete-${index}`} className="category-incomplete">
+                      <td>{method.originalCode || method.code}</td>
+                      <td className="incomplete">
+                        {formatDelta(method.avgDelta)}
+                      </td>
+                      <td>
+                        <ul className="delta-values-list">
+                          {Object.entries(method.deltaValues || {}).map(([element, value]) => (
+                            <li key={element}>
+                              {element}: {formatDelta(value)}
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td className="citation-cell">
+                        {getCitationTrendUrl(method.code.split('@')[0]) ? (
+                          <a
+                            href={getCitationTrendUrl(method.code.split('@')[0])}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="citation-link"
+                            title="View citation trend on atomistic.software"
+                          >
+                            <span className="trend-icon">📈</span>
+                          </a>
+                        ) : (
+                          <span className="no-citation-data">-</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </React.Fragment>
+              )}
+            </tbody>
+          </table>
+        </>
       ) : (
         <div className="no-data-message">
           <p>No methods found for these elements. Try another formula or include all-electron codes.</p>

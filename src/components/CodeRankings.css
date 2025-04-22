@@ -261,3 +261,106 @@ tr.category-incomplete td:first-child {
     display: none;
   }
 }
+
+/* Color legend styling */
+.color-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.color-indicator-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #555;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.color-indicator-wrapper:hover {
+  background-color: #f5f5f5;
+}
+
+.color-indicator-text {
+  font-weight: 500;
+}
+
+.color-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Tooltip styles */
+.color-indicator-wrapper[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  text-align: center;
+  border-radius: 4px;
+  padding: 8px 12px;
+  width: max-content;
+  max-width: 250px;
+  z-index: 10;
+  font-weight: normal;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  white-space: normal;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.color-indicator-wrapper[data-tooltip]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% - 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+  z-index: 10;
+}
+
+/* Keep existing indicator colors */
+.color-indicator.excellent {
+  background-color: #c8e6c9;
+  border: 1px solid #2e7d32;
+}
+
+.color-indicator.good {
+  background-color: #dcedc8;
+  border: 1px solid #558b2f;
+}
+
+.color-indicator.fair {
+  background-color: #fff9c4;
+  border: 1px solid #f9a825;
+}
+
+.color-indicator.poor {
+  background-color: #ffccbc;
+  border: 1px solid #d84315;
+}
+
+/* Alternative approach: Add a colored dot beside each delta value */
+.delta-category-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+}
