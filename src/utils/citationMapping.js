@@ -23,13 +23,16 @@ const citationMapping = {
 export function getCitationTrendUrl(code) {
   if (!code) return null;
   
+  // Clean the code name (remove anything after @ or |)
+  const cleanCodeName = code.split('@')[0].split('|')[0].trim();
+  
   // Try direct match first
-  if (citationMapping[code]) {
-    return citationMapping[code];
+  if (citationMapping[cleanCodeName]) {
+    return citationMapping[cleanCodeName];
   }
   
   // Look for partial matches (for cases like 'SIRIUS/CP2K')
-  const codeParts = code.split('/');
+  const codeParts = cleanCodeName.split('/');
   for (const part of codeParts) {
     if (citationMapping[part]) {
       return citationMapping[part];
