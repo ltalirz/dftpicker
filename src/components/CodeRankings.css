@@ -104,6 +104,7 @@
   border-radius: 4px;
   background-color: #f0f4ff;
   transition: background-color 0.2s;
+  cursor: pointer !important;
 }
 
 .citation-link:hover {
@@ -488,36 +489,9 @@ tr.category-incomplete td:first-child {
 .MuiSvgIcon-root {
   color: #555 !important;
   font-size: 1.2rem !important;
-}
-
-.tooltip-wrapper {
-  display: inline-block;
-}
-
-.mui-icon-container {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  cursor: help;
-}
-
-.citation-link .MuiSvgIcon-root {
-  color: #4a69bd !important;
-}
-
-.icons-group {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2px;
-}
-
-.no-citation-data {
-  color: #999;
-  font-style: italic;
-  font-size: 0.9em;
-  display: inline-block;
-  padding: 4px 8px;
 }
 
 /* Remove the conflicting color styles that were overriding tooltips */
@@ -586,4 +560,23 @@ tr.category-incomplete td:first-child {
 .tooltip:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+/* Code link styling */
+.code-link {
+  color: #4a69bd;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+  cursor: pointer; /* Use standard pointer cursor instead of help cursor */
+}
+
+.code-link:hover {
+  color: #3a539b;
+  text-decoration: underline;
+}
+
+/* Override the help cursor for links */
+a[title] {
+  cursor: pointer !important; /* Force pointer cursor for all links with title attribute */
 }
