@@ -16,12 +16,13 @@
 .rankings-table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .rankings-table th, 
 .rankings-table td {
-  padding: 12px 15px;
+  padding: 0.75rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -32,8 +33,23 @@
   z-index: 1;
 }
 
+/* Remove color from rows - only apply to specific cells */
+.rankings-table tbody tr {
+  background-color: transparent;
+}
+
+/* Apply color only to specific cells */
+.rankings-table td.excellent,
+.rankings-table td.good,
+.rankings-table td.fair,
+.rankings-table td.poor,
+.rankings-table td.unknown {
+  width: 120px;
+  text-align: center;
+}
+
 .rankings-table th {
-  background-color: #f8f9fa;
+  background-color: #f2f2f2;
   font-weight: bold;
 }
 
@@ -43,7 +59,7 @@
 }
 
 .rankings-table tr:hover {
-  background-color: #f1f1f1;
+  background-color: #f5f5f5;
 }
 
 .delta-values-list {
@@ -82,6 +98,7 @@
 
 .trend-icon {
   font-size: 1.1rem;
+  display: inline-block;
 }
 
 .no-citation-data {
@@ -90,6 +107,144 @@
   font-size: 0.9em;
   display: inline-block;
   padding: 4px 8px;
+}
+
+/* Score color classes - corrected to match delta value ranges */
+.excellent {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.good {
+  background-color: #dcedc8;
+  color: #558b2f;
+}
+
+.fair {
+  background-color: #fff9c4;
+  color: #f9a825;
+}
+
+.poor {
+  background-color: #ffccbc;
+  color: #d84315;
+}
+
+.very-poor {
+  background-color: #ffccbc;
+  color: #d84315;
+}
+
+/* Add styling for unknown category */
+.unknown {
+  background-color: #ffeeee;
+  color: #d32f2f;
+}
+
+/* Category section styling */
+.category-section {
+  margin-bottom: 2rem;
+}
+
+.category-header {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Apply color scheme to category headers */
+.category-section.excellent .category-header {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.category-section.good .category-header {
+  background-color: #dcedc8;
+  color: #558b2f;
+}
+
+.category-section.fair .category-header {
+  background-color: #fff9c4;
+  color: #f9a825;
+}
+
+.category-section.poor .category-header {
+  background-color: #ffe0b2;
+  color: #ef6c00;
+}
+
+.category-section.very-poor .category-header {
+  background-color: #ffccbc;
+  color: #d84315;
+}
+
+.category-section.unknown .category-header {
+  background-color: #ffeeee;
+  color: #d32f2f;
+}
+
+/* Add styling for no data message */
+.no-data-message {
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #f8d7da;
+  border-left: 4px solid #dc3545;
+  color: #721c24;
+  border-radius: 4px;
+}
+
+/* Category spacers for visual separation */
+tr.category-spacer td {
+  height: 20px;
+  background-color: #f9f9f9;
+  border-bottom: none;
+}
+
+/* Category label styling */
+tr.category-label td {
+  padding: 8px 16px;
+  font-weight: bold;
+  background-color: #f2f2f2;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Incomplete data section styling */
+tr.incomplete-label td {
+  color: #777;
+  font-style: italic;
+}
+
+.category-incomplete td.incomplete {
+  background-color: #f2f2f2;
+  color: #777;
+}
+
+/* Citation cell styling */
+.citation-cell {
+  text-align: center;
+  width: 80px;
+}
+
+/* Add subtle indicators for different categories */
+tr.category-excellent td:first-child {
+  border-left: 4px solid #c8e6c9;
+}
+
+tr.category-good td:first-child {
+  border-left: 4px solid #dcedc8;
+}
+
+tr.category-fair td:first-child {
+  border-left: 4px solid #fff9c4;
+}
+
+tr.category-poor td:first-child {
+  border-left: 4px solid #ffccbc;
+}
+
+tr.category-incomplete td:first-child {
+  border-left: 4px solid #f2f2f2;
 }
 
 /* Responsive adjustments */

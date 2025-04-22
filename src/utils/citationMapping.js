@@ -1,34 +1,42 @@
 /**
- * Maps DFT code names from our data to atomistic.software identifiers
+ * Map DFT code names to their citation trend URLs on atomistic.software
  */
 const citationMapping = {
-  'ABINIT@PW|PseudoDojo-v0.5': 'ABINIT',
-  'BigDFT@DW|HGH-K(Valence)': 'BigDFT',
-  'CP2K/Quickstep@TZV2P|GTH': 'CP2K',
-  'FLEUR@LAPW+LO': 'FLEUR',
-  'GPAW@PW|PAW-v0.9.20000': 'GPAW',
-  'CASTEP@PW|C19MK2': 'CASTEP',
-  'Quantum ESPRESSO@PW|SSSP-prec-v1.3': 'Quantum ESPRESSO',
-  'SIESTA@AtOrOptDiamond|PseudoDojo-v0.4': 'SIESTA',
-  'SIRIUS/CP2K@PW|SSSP-prec-v1.2': 'Quantum ESPRESSO',
-  'VASP@PW|GW-PAW54*': 'VASP',
-  'WIEN2k@(L)APW+lo+LO': 'WIEN2k'
+  'VASP': 'https://atomistic.software/plot/cite/VASP',
+  'Quantum ESPRESSO': 'https://atomistic.software/plot/cite/Quantum+ESPRESSO',
+  'CASTEP': 'https://atomistic.software/plot/cite/CASTEP',
+  'ABINIT': 'https://atomistic.software/plot/cite/ABINIT',
+  'CP2K': 'https://atomistic.software/plot/cite/CP2K',
+  'SIESTA': 'https://atomistic.software/plot/cite/SIESTA',
+  'GPAW': 'https://atomistic.software/plot/cite/GPAW',
+  'WIEN2k': 'https://atomistic.software/plot/cite/WIEN2k',
+  'FLEUR': 'https://atomistic.software/plot/cite/FLEUR',
+  'BigDFT': 'https://atomistic.software/plot/cite/BigDFT',
+  'SIRIUS': 'https://atomistic.software/plot/cite/SIRIUS'
 };
 
 /**
- * Get the citation trend URL for a DFT code
- * 
- * @param {string} codeName - The name of the DFT code
- * @returns {string|null} The URL to the citation trend, or null if not found
+ * Get citation trend URL for a given code name
+ * @param {string} code - Code name to look up
+ * @returns {string|null} - URL to citation trend or null if not found
  */
-export function getCitationTrendUrl(codeName) {
-  const identifier = citationMapping[codeName];
-  const encodedCodeName = encodeURIComponent(identifier);
-  if (!identifier) {
-    return null;
+export function getCitationTrendUrl(code) {
+  if (!code) return null;
+  
+  // Try direct match first
+  if (citationMapping[code]) {
+    return citationMapping[code];
   }
   
-  return `https://atomistic.software/#/charts/${encodedCodeName}`;
+  // Look for partial matches (for cases like 'SIRIUS/CP2K')
+  const codeParts = code.split('/');
+  for (const part of codeParts) {
+    if (citationMapping[part]) {
+      return citationMapping[part];
+    }
+  }
+  
+  return null;
 }
 
 export default citationMapping;
