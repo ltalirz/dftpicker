@@ -141,6 +141,18 @@
   color: #d32f2f;
 }
 
+/* Missing value and no data styling */
+.missing-value, .no-data {
+  color: #999;
+  font-style: italic;
+}
+
+.no-data {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
 /* Category section styling */
 .category-section {
   margin-bottom: 2rem;

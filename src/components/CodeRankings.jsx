@@ -180,13 +180,17 @@ const CodeRankings = ({ rankings, elements, formula }) => {
                     <tr key={`incomplete-${index}`} className="category-incomplete">
                       <td>{method.originalCode || method.code}</td>
                       <td className="incomplete">
-                        {formatDelta(method.avgDelta)}
+                        {/* Don't show average delta for incomplete data */}
+                        <span className="no-data">N/A</span>
                       </td>
                       <td>
                         <ul className="delta-values-list">
-                          {Object.entries(method.deltaValues || {}).map(([element, value]) => (
+                          {/* Display all elements, including those with missing values */}
+                          {elements.map(element => (
                             <li key={element}>
-                              {element}: {formatDelta(value)}
+                              {element}: {method.deltaValues && method.deltaValues[element] !== undefined ? 
+                                formatDelta(method.deltaValues[element]) : 
+                                <span className="missing-value">N/A</span>}
                             </li>
                           ))}
                         </ul>
