@@ -1,22 +1,40 @@
 import React from 'react';
+import { Box, Chip, Tooltip } from '@mui/material';
 
 /**
- * A single color indicator for the legend
+ * A single color indicator for the legend with Material UI
  */
 const ColorIndicator = ({ categoryName, className, description }) => (
-  <div className="color-indicator-wrapper" data-tooltip={description}>
-    <span className={`color-indicator ${className}`}></span>
-    <span className="color-indicator-text">{categoryName}</span>
-  </div>
+  <Tooltip title={description} arrow placement="top">
+    <Chip
+      label={categoryName}
+      variant="outlined"
+      className={className}
+      sx={{ 
+        '&.excellent': { borderColor: '#2e7d32', bgcolor: '#c8e6c9' },
+        '&.good': { borderColor: '#558b2f', bgcolor: '#dcedc8' },
+        '&.fair': { borderColor: '#f9a825', bgcolor: '#fff9c4' },
+        '&.poor': { borderColor: '#d84315', bgcolor: '#ffccbc' },
+      }}
+    />
+  </Tooltip>
 );
 
 /**
- * Color legend component for delta categories
+ * Color legend component for delta categories using Material UI
  * @returns {JSX.Element} - Color legend component
  */
 const ColorLegend = () => {
   return (
-    <div className="color-legend">
+    <Box 
+      sx={{ 
+        display: 'flex', 
+        flexWrap: 'wrap', 
+        gap: 1.5, 
+        justifyContent: 'flex-end',
+        mb: 2
+      }}
+    >
       <ColorIndicator 
         categoryName="Excellent" 
         className="excellent" 
@@ -37,7 +55,7 @@ const ColorLegend = () => {
         className="poor" 
         description="Δ ≥ 2 meV/atom: Lower accuracy, use with caution"
       />
-    </div>
+    </Box>
   );
 };
 
