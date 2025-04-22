@@ -153,7 +153,7 @@ const FormulaInput = ({ onSubmit, initialIncludeAllElectron = false }) => {
             ref={inputRef}
           />
           <button type="submit" className="submit-button">
-            Rank DFT Codes
+            Check DFT Codes
           </button>
         </div>
         
