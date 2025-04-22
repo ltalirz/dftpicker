@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Link, List, ListItem, Chip } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Link, List, ListItem } from '@mui/material';
 import { parseCodeIdentifier } from '../../utils/codeParser';
 import { CostIcon, SourceIcon, CitationLink } from './CodeInfoIcons';
 
@@ -32,12 +32,11 @@ const MethodRow = ({ method, categoryName, index, categoryIndex, getCodeMetadata
   const { code, basis, pseudopotential } = parseCodeIdentifier(method.originalCode || method.code);
   const codeMetadata = getCodeMetadata(code);
   const categoryClass = categoryName ? getCategoryClass(categoryName) : "incomplete";
-  const rowClass = `category-${categoryClass}`;
-  
+
   return (
-    <TableRow key={`method-${categoryIndex}-${index}`} className={rowClass}>
+    <TableRow className={`category-${categoryClass}`}>
       <TableCell>
-        {codeMetadata && codeMetadata.homepage ? (
+        {codeMetadata?.homepage ? (
           <Link 
             href={codeMetadata.homepage} 
             target="_blank"
@@ -61,7 +60,7 @@ const MethodRow = ({ method, categoryName, index, categoryIndex, getCodeMetadata
         <List dense className="delta-values-list">
           {Object.entries(method.deltaValues || {}).map(([element, value]) => (
             <ListItem key={element} disableGutters sx={{ py: 0.25 }}>
-              {element}: {formatDelta(value)}
+              <span>{element}: {formatDelta(value)}</span>
             </ListItem>
           ))}
         </List>
@@ -87,9 +86,9 @@ const IncompleteMethodRow = ({ method, index, getCodeMetadata, elements }) => {
   const codeMetadata = getCodeMetadata(code);
   
   return (
-    <TableRow key={`incomplete-${index}`} className="category-incomplete">
+    <TableRow className="category-incomplete">
       <TableCell>
-        {codeMetadata && codeMetadata.homepage ? (
+        {codeMetadata?.homepage ? (
           <Link 
             href={codeMetadata.homepage} 
             target="_blank"
@@ -112,9 +111,11 @@ const IncompleteMethodRow = ({ method, index, getCodeMetadata, elements }) => {
         <List dense className="delta-values-list">
           {elements.map(element => (
             <ListItem key={element} disableGutters sx={{ py: 0.25 }}>
-              {element}: {method.deltaValues && method.deltaValues[element] !== undefined ? 
-                formatDelta(method.deltaValues[element]) : 
-                <span className="missing-value">N/A</span>}
+              <span>
+                {element}: {method.deltaValues?.[element] !== undefined ? 
+                  formatDelta(method.deltaValues[element]) : 
+                  <span className="missing-value">N/A</span>}
+              </span>
             </ListItem>
           ))}
         </List>
@@ -140,7 +141,7 @@ const columnWidths = {
   basisSet: '14%', 
   pseudopotential: '14%',
   averageDelta: '6%',
-  deltaPerElement: '12%',
+  deltaPerElement: '14%',
   cost: '6%',
   source: '6%',
   citationTrend: '7%'
