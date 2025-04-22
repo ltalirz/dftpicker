@@ -23,7 +23,7 @@
 .rankings-table th, 
 .rankings-table td {
   padding: 0.75rem;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
@@ -45,7 +45,6 @@
 .rankings-table td.poor,
 .rankings-table td.unknown {
   width: 120px;
-  text-align: center;
 }
 
 .rankings-table th {
@@ -66,7 +65,6 @@
 .rankings-table th:nth-child(4), 
 .rankings-table td:nth-child(4) {
   width: 120px;
-  text-align: center;
 }
 
 .rankings-table th:nth-child(2),
@@ -96,8 +94,6 @@
 
 .citation-link {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
   color: #4a69bd;
   text-decoration: none;
   padding: 4px 8px;
@@ -165,7 +161,6 @@
 
 .no-data {
   display: inline-block;
-  text-align: center;
   width: 100%;
 }
 
@@ -250,7 +245,6 @@ tr.incomplete-label td {
 
 /* Citation cell styling */
 .citation-cell {
-  text-align: center;
   width: 80px;
 }
 
@@ -417,7 +411,6 @@ tr.category-incomplete td:first-child {
 /* Cost and Source cell styles */
 .cost-cell,
 .source-cell {
-  text-align: center;
   font-size: 0.9em;
   font-weight: 500;
   width: 100px;
@@ -481,7 +474,6 @@ tr.category-incomplete td:first-child {
 
 /* Icon cell styling */
 .icon-cell {
-  text-align: center;
   width: 60px;
 }
 

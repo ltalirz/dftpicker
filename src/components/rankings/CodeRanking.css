@@ -1,0 +1,38 @@
+/* Center align all table cells */
+.rankings-table .MuiTableCell-root {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Update list alignment to be centered */
+.rankings-table .delta-values-list {
+  display: inline-block;
+  text-align: center;
+  padding-left: 0;
+  width: 100%;
+}
+
+/* Adjust list items to properly center content */
+.rankings-table .delta-values-list .MuiListItem-root {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0;
+  text-align: center;
+  width: 100%;
+}
+
+/* Style the content inside list items to be centered */
+.rankings-table .delta-values-list .MuiListItem-root > * {
+  text-align: center;
+  width: auto;
+  display: inline-block;
+}
+
+/* Ensure links and other interactive elements maintain center alignment */
+.rankings-table .code-link,
+.rankings-table .icon-cell,
+.rankings-table .citation-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

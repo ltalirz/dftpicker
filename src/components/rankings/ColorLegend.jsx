@@ -20,22 +20,22 @@ const ColorLegend = () => {
       <ColorIndicator 
         categoryName="Excellent" 
         className="excellent" 
-        description="Δ < 0.3 meV/atom: Great agreement with all-electron reference calculations for the given elements"
+        description="Δ < 0.3 meV/atom: Great agreement with all-electron reference calculations"
       />
       <ColorIndicator 
         categoryName="Good" 
         className="good" 
-        description="0.3 ≤ Δ < 1 meV/atom: Good agreement with all-electron reference calculations for the given elements"
+        description="0.3 ≤ Δ < 1 meV/atom: Good agreement with all-electron reference calculations"
       />
       <ColorIndicator 
         categoryName="Fair" 
         className="fair" 
-        description="1 ≤ Δ < 2 meV/atom: Fair agreement with all-electron reference calculations for the given elements"
+        description="1 ≤ Δ < 2 meV/atom: Fair agreement with all-electron reference calculations"
       />
       <ColorIndicator 
         categoryName="Poor" 
         className="poor" 
-        description="Δ ≥ 2 meV/atom: Substantial deviations from all-electron reference calculations for the given elements. Use with caution"
+        description="Δ ≥ 2 meV/atom: Substantial deviations from all-electron reference calculations. Use with caution"
       />
     </div>
   );

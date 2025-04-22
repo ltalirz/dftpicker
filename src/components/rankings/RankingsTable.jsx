@@ -135,20 +135,31 @@ const IncompleteMethodRow = ({ method, index, getCodeMetadata, elements }) => {
 /**
  * Main rankings table component
  */
+const columnWidths = {
+  code: '14%',
+  basisSet: '14%', 
+  pseudopotential: '14%',
+  averageDelta: '6%',
+  deltaPerElement: '12%',
+  cost: '6%',
+  source: '6%',
+  citationTrend: '7%'
+};
+
 const RankingsTable = ({ categories, categoryNames, incomplete, elements, getCodeMetadata }) => {
   return (
     <TableContainer>
       <Table className="rankings-table" size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Code</TableCell>
-            <TableCell>Basis Set</TableCell>
-            <TableCell>Pseudopotential</TableCell>
-            <TableCell>Average Δ (meV/atom)</TableCell>
-            <TableCell>Δ per Element</TableCell>
-            <TableCell>Cost</TableCell>
-            <TableCell>Source</TableCell>
-            <TableCell>Citation Trend</TableCell>
+            <TableCell sx={{ width: columnWidths.code }}>Code</TableCell>
+            <TableCell sx={{ width: columnWidths.basisSet }}>Basis Set</TableCell>
+            <TableCell sx={{ width: columnWidths.pseudopotential }}>Pseudopotential</TableCell>
+            <TableCell sx={{ width: columnWidths.averageDelta }}>Average Δ (meV/atom)</TableCell>
+            <TableCell sx={{ width: columnWidths.deltaPerElement }}>Δ per Element</TableCell>
+            <TableCell sx={{ width: columnWidths.cost }}>Cost</TableCell>
+            <TableCell sx={{ width: columnWidths.source }}>Source</TableCell>
+            <TableCell sx={{ width: columnWidths.citationTrend }}>Citation Trend</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
