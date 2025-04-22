@@ -517,7 +517,112 @@ tr.category-incomplete td:first-child {
   font-weight: bold;
 }
 
-/* New tooltip implementation */
+/* Fix for the tooltip implementation with improved z-index and positioning */
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Fix tooltip positioning and overlap issues */
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Complete tooltip redesign to prevent cutoff issues */
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: max-content;
+  max-width: 200px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 12px;
+  position: fixed; /* Use fixed positioning instead of absolute */
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-weight: normal;
+  font-size: 14px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  word-wrap: break-word;
+  white-space: normal;
+  /* Remove any previously set positioning */
+  top: auto;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  transform: none;
+}
+
+/* Position the tooltip with JavaScript instead of CSS */
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Remove the arrow since its position will be dynamic */
+.tooltip .tooltip-text::after {
+  display: none;
+}
+
+/* Remove all previous conflicting tooltip styles */
+.tooltip .tooltip-text[style] {
+  top: auto !important;
+  right: auto !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: 130% !important;
+}
+
+/* Make sure icon containers and tooltips work well together */
+.MuiSvgIcon-root {
+  color: #555 !important;
+  font-size: 1.2rem !important;
+}
+
+.icons-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.citation-link .MuiSvgIcon-root {
+  color: #4a69bd !important;
+}
+
+/* Code link styling */
+.code-link {
+  color: #4a69bd;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+  cursor: pointer !important;
+}
+
+.code-link:hover {
+  color: #3a539b;
+  text-decoration: underline;
+}
+
+/* Ensure all links have pointer cursor */
+a, 
+a[title], 
+.tooltip, 
+.citation-link {
+  cursor: pointer !important;
+}
+
+/* New tooltip implementation with improved positioning */
 .tooltip {
   position: relative;
   display: inline-flex;
@@ -527,25 +632,31 @@ tr.category-incomplete td:first-child {
 .tooltip .tooltip-text {
   visibility: hidden;
   width: max-content;
-  max-width: 250px;
+  max-width: 200px; /* Limit tooltip width */
   background-color: #333;
   color: #fff;
   text-align: center;
   border-radius: 6px;
   padding: 8px 12px;
   position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
+  z-index: 9999; /* Very high to ensure it appears on top */
   opacity: 0;
   transition: opacity 0.3s;
   font-weight: normal;
   font-size: 14px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   pointer-events: none;
+  word-wrap: break-word; /* Ensure text wraps properly */
+  white-space: normal; /* Allow text to wrap to new lines */
+  
+  /* Position tooltip above the icon */
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
 }
 
+/* Add arrow pointing down */
 .tooltip .tooltip-text::after {
   content: "";
   position: absolute;
@@ -562,21 +673,11 @@ tr.category-incomplete td:first-child {
   opacity: 1;
 }
 
-/* Code link styling */
-.code-link {
-  color: #4a69bd;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
-  cursor: pointer; /* Use standard pointer cursor instead of help cursor */
-}
-
-.code-link:hover {
-  color: #3a539b;
-  text-decoration: underline;
-}
-
-/* Override the help cursor for links */
-a[title] {
-  cursor: pointer !important; /* Force pointer cursor for all links with title attribute */
+/* Remove all previous conflicting tooltip styles */
+.tooltip .tooltip-text[style] {
+  top: auto !important;
+  right: auto !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: 130% !important;
 }
