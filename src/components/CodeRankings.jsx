@@ -113,8 +113,8 @@ const CodeRankings = ({ rankings, elements, formula }) => {
             <thead>
               <tr>
                 <th>DFT Code</th>
-                <th>Average Delta (meV/atom)</th>
-                <th>Delta Values per Element</th>
+                <th>Average Δ (meV/atom)</th>
+                <th>Δ per Element</th>
                 <th>Citation Trend</th>
               </tr>
             </thead>
@@ -172,7 +172,7 @@ const CodeRankings = ({ rankings, elements, formula }) => {
                       <td colSpan="4"></td>
                     </tr>
                   )}
-                  {/* Add a label for the incomplete section */}
+                  {/* Add a label for t incomplete section */}
                   <tr className="category-label incomplete-label">
                     <td colSpan="4">Codes with missing data for some elements</td>
                   </tr>

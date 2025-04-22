@@ -45,7 +45,7 @@ function App() {
           </div>
           <div className="header-text">
             <h1>DFT Code Picker</h1>
-            <p>Find the most accurate DFT code for your chemical system</p>
+            <p>Find accurate density functional theory codes for your chemical system</p>
           </div>
         </div>
       </header>
