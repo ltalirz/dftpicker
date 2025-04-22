@@ -21,7 +21,7 @@ const MethodsAccordion = () => {
       {isOpen && (
         <div className="accordion-content">
           <p>
-            This tool ranks DFT codes based on the <a href="https://molmod.ugent.be/deltacodesdft" target="_blank">Δ-value</a> (delta value), which measures their agreement on 
+            This tool compares DFT codes based on the <a href="https://molmod.ugent.be/deltacodesdft" target="_blank">Δ-value</a> (delta value), which measures their agreement on 
             the equation of state curve for selected elemental crystals.
             Here, lower delta values indicate better agreement with reference calculations and generally suggest better 
             accuracy for the given element.
