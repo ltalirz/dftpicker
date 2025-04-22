@@ -2,6 +2,15 @@ import React from 'react';
 import { getCitationTrendUrl } from '../utils/citationMapping';
 import Disclaimer from './Disclaimer';
 import { parseCodeIdentifier } from '../utils/codeParser';
+import codesData from '../data/codes.json';
+// Import Material UI icons
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import MoneyOffIcon from '@mui/icons-material/MoneyOff';
+import SchoolIcon from '@mui/icons-material/School';
+import LockIcon from '@mui/icons-material/Lock';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import NoEncryptionIcon from '@mui/icons-material/NoEncryption';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import './CodeRankings.css';
 
 const CodeRankings = ({ rankings, elements, formula }) => {
@@ -72,6 +81,73 @@ const CodeRankings = ({ rankings, elements, formula }) => {
     return delta.toFixed(2);
   };
 
+  // Function to get code metadata from codes.json
+  const getCodeMetadata = (codeName) => {
+    // Clean up the code name to match keys in codes.json
+    const cleanCodeName = codeName.split('/')[0];
+    return codesData[cleanCodeName] || null;
+  };
+
+  // Function to render tooltip text
+  const TooltipText = (tooltipText, icon) => {
+    return (
+      <span className="tooltip">
+        {icon}
+        <span className="tooltip-text">{tooltipText}</span>
+      </span>
+    );
+  };
+
+  // Function to get cost icon with appropriate tooltip
+  const getCostIcon = (codeMetadata) => {
+    if (!codeMetadata || !codeMetadata.cost) {
+      return <span className="no-data">-</span>;
+    }
+    
+    const cost = codeMetadata.cost;
+    
+    if (cost.includes('commercial')) {
+      return TooltipText('Commercial license required', <AttachMoneyIcon />);
+    } else if (cost.includes('free') && cost.includes('academia')) {
+      return TooltipText('Free for academic use', 
+        <span className="icons-group">
+          <MoneyOffIcon />
+          <SchoolIcon />
+        </span>
+      );
+    } else if (cost.includes('free')) {
+      return TooltipText('Free to use', <MoneyOffIcon />);
+    }
+    
+    return <span className="no-data">-</span>;
+  };
+
+  // Function to get source icon with appropriate tooltip
+  const getSourceIcon = (codeMetadata) => {
+    if (!codeMetadata || !codeMetadata.source) {
+      return <span className="no-data">-</span>;
+    }
+    
+    const source = codeMetadata.source;
+    const license = codeMetadata.license;
+    
+    if (source.includes('available')) {
+      const tooltipText = license 
+        ? `Source available with restrictions (${license})`
+        : 'Source available with restrictions';
+      return TooltipText(tooltipText, <LockOpenIcon />);
+    } else if (source.includes('closed')) {
+      return TooltipText('Closed source', <LockIcon />);
+    } else if (source.includes('copyleft') || source.includes('permissive')) {
+      const tooltipText = license 
+        ? `Open source (${license})`
+        : 'Open source';
+      return TooltipText(tooltipText, <NoEncryptionIcon />);
+    }
+    
+    return <span className="no-data">-</span>;
+  };
+
   // Updated helper component for color indicator with tooltip
   const ColorIndicator = ({ categoryName, className, description }) => (
     <div className="color-indicator-wrapper" data-tooltip={description}>
@@ -118,6 +194,8 @@ const CodeRankings = ({ rankings, elements, formula }) => {
                 <th>Pseudopotential</th>
                 <th>Average Δ (meV/atom)</th>
                 <th>Δ per Element</th>
+                <th>Cost</th>
+                <th>Source</th>
                 <th>Citation Trend</th>
               </tr>
             </thead>
@@ -127,6 +205,8 @@ const CodeRankings = ({ rankings, elements, formula }) => {
                 <React.Fragment key={categoryName}>
                   {categories[categoryName].map((method, index) => {
                     const { code, basis, pseudopotential } = parseCodeIdentifier(method.originalCode || method.code);
+                    const codeMetadata = getCodeMetadata(code);
+                    
                     return (
                       <tr key={`complete-${categoryIndex}-${index}`} className={`category-${getCategoryClass(categoryName)}`}>
                         <td>{code}</td>
@@ -144,6 +224,12 @@ const CodeRankings = ({ rankings, elements, formula }) => {
                             ))}
                           </ul>
                         </td>
+                        <td className="icon-cell cost-cell">
+                          {getCostIcon(codeMetadata)}
+                        </td>
+                        <td className="icon-cell source-cell">
+                          {getSourceIcon(codeMetadata)}
+                        </td>
                         <td className="citation-cell">
                           {getCitationTrendUrl(code) ? (
                             <a
@@ -153,10 +239,10 @@ const CodeRankings = ({ rankings, elements, formula }) => {
                               className="citation-link"
                               title="View citation trend on atomistic.software"
                             >
-                              <span className="trend-icon">📈</span>
+                              <ShowChartIcon />
                             </a>
                           ) : (
-                            <span className="no-citation-data">-</span>
+                            <span className="no-data">-</span>
                           )}
                         </td>
                       </tr>
@@ -165,7 +251,7 @@ const CodeRankings = ({ rankings, elements, formula }) => {
                   {/* Add a spacer row except after the last category */}
                   {categoryIndex < categoryNames.length - 1 && (
                     <tr className="category-spacer">
-                      <td colSpan="6"></td>
+                      <td colSpan="8"></td>
                     </tr>
                   )}
                 </React.Fragment>
@@ -177,15 +263,17 @@ const CodeRankings = ({ rankings, elements, formula }) => {
                   {/* Add a spacer row before incomplete section if there was complete data */}
                   {categoryNames.length > 0 && (
                     <tr className="category-spacer">
-                      <td colSpan="6"></td>
+                      <td colSpan="8"></td>
                     </tr>
                   )}
                   {/* Add a label for the incomplete section */}
                   <tr className="category-label incomplete-label">
-                    <td colSpan="6">Codes with missing data for some elements</td>
+                    <td colSpan="8">Codes with missing data for some elements</td>
                   </tr>
                   {incomplete.map((method, index) => {
                     const { code, basis, pseudopotential } = parseCodeIdentifier(method.originalCode || method.code);
+                    const codeMetadata = getCodeMetadata(code);
+                    
                     return (
                       <tr key={`incomplete-${index}`} className="category-incomplete">
                         <td>{code}</td>
@@ -207,6 +295,12 @@ const CodeRankings = ({ rankings, elements, formula }) => {
                             ))}
                           </ul>
                         </td>
+                        <td className="icon-cell cost-cell">
+                          {getCostIcon(codeMetadata)}
+                        </td>
+                        <td className="icon-cell source-cell">
+                          {getSourceIcon(codeMetadata)}
+                        </td>
                         <td className="citation-cell">
                           {getCitationTrendUrl(code) ? (
                             <a
@@ -216,10 +310,10 @@ const CodeRankings = ({ rankings, elements, formula }) => {
                               className="citation-link"
                               title="View citation trend on atomistic.software"
                             >
-                              <span className="trend-icon">📈</span>
+                              <ShowChartIcon />
                             </a>
                           ) : (
-                            <span className="no-citation-data">-</span>
+                            <span className="no-data">-</span>
                           )}
                         </td>
                       </tr>
