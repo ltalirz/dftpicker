@@ -85,6 +85,27 @@ const CodeRankings = ({ rankings, elements, formula }) => {
   const getCodeMetadata = (codeName) => {
     // Clean up the code name to match keys in codes.json
     const cleanCodeName = codeName.split('/')[0];
+    
+    // Special case for SIRIUS/CP2K - use Quantum ESPRESSO's metadata for cost and source
+    if (codeName === 'SIRIUS/CP2K') {
+      return {
+        ...codesData['Quantum ESPRESSO'],
+        name: 'SIRIUS/CP2K',
+        homepage: 'https://github.com/electronic-structure/SIRIUS'
+      };
+    }
+    
+    // Special case for BigDFT - ensure GPL-2.0 license is correct
+    if (cleanCodeName === 'BigDFT') {
+      return {
+        ...codesData['BigDFT'],
+        license: 'GPL-2.0',
+        cost: 'free',
+        source: 'copyleft',
+        homepage: 'https://www.bigdft.org'
+      };
+    }
+    
     return codesData[cleanCodeName] || null;
   };
 
@@ -209,7 +230,21 @@ const CodeRankings = ({ rankings, elements, formula }) => {
                     
                     return (
                       <tr key={`complete-${categoryIndex}-${index}`} className={`category-${getCategoryClass(categoryName)}`}>
-                        <td>{code}</td>
+                        <td>
+                          {codeMetadata && codeMetadata.homepage ? (
+                            <a 
+                              href={codeMetadata.homepage} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="code-link"
+                              title={`Visit ${code} homepage`}
+                            >
+                              {code}
+                            </a>
+                          ) : (
+                            code
+                          )}
+                        </td>
                         <td>{basis.display}</td>
                         <td>{pseudopotential}</td>
                         <td className={getCategoryClass(categoryName)}>
@@ -276,7 +311,21 @@ const CodeRankings = ({ rankings, elements, formula }) => {
                     
                     return (
                       <tr key={`incomplete-${index}`} className="category-incomplete">
-                        <td>{code}</td>
+                        <td>
+                          {codeMetadata && codeMetadata.homepage ? (
+                            <a 
+                              href={codeMetadata.homepage} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="code-link"
+                              title={`Visit ${code} homepage`}
+                            >
+                              {code}
+                            </a>
+                          ) : (
+                            code
+                          )}
+                        </td>
                         <td>{basis.display}</td>
                         <td>{pseudopotential}</td>
                         <td className="incomplete">
