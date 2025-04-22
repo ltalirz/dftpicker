@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Link, List, ListItem, Chip } from '@mui/material';
 import { parseCodeIdentifier } from '../../utils/codeParser';
 import { CostIcon, SourceIcon, CitationLink } from './CodeInfoIcons';
 
@@ -30,49 +31,51 @@ const getCategoryClass = (categoryName) => {
 const MethodRow = ({ method, categoryName, index, categoryIndex, getCodeMetadata }) => {
   const { code, basis, pseudopotential } = parseCodeIdentifier(method.originalCode || method.code);
   const codeMetadata = getCodeMetadata(code);
-  const rowClass = categoryName ? `category-${getCategoryClass(categoryName)}` : "category-incomplete";
+  const categoryClass = categoryName ? getCategoryClass(categoryName) : "incomplete";
+  const rowClass = `category-${categoryClass}`;
   
   return (
-    <tr key={`method-${categoryIndex}-${index}`} className={rowClass}>
-      <td>
+    <TableRow key={`method-${categoryIndex}-${index}`} className={rowClass}>
+      <TableCell>
         {codeMetadata && codeMetadata.homepage ? (
-          <a 
+          <Link 
             href={codeMetadata.homepage} 
-            target="_blank" 
+            target="_blank"
             rel="noopener noreferrer"
             className="code-link"
-            title={`Visit ${code} homepage`}
+            underline="hover"
           >
             {code}
-          </a>
+          </Link>
         ) : (
           code
         )}
-      </td>
-      <td>{basis.display}</td>
-      <td>{pseudopotential}</td>
-      <td className={categoryName ? getCategoryClass(categoryName) : "incomplete"}>
-        {method.avgDelta !== undefined ? formatDelta(method.avgDelta) : <span className="no-data">N/A</span>}
-      </td>
-      <td>
-        <ul className="delta-values-list">
+      </TableCell>
+      <TableCell>{basis.display}</TableCell>
+      <TableCell>{pseudopotential}</TableCell>
+      <TableCell className={categoryClass}>
+        {method.avgDelta !== undefined ? formatDelta(method.avgDelta) : 
+          <span className="no-data">N/A</span>}
+      </TableCell>
+      <TableCell>
+        <List dense className="delta-values-list">
           {Object.entries(method.deltaValues || {}).map(([element, value]) => (
-            <li key={element}>
+            <ListItem key={element} disableGutters sx={{ py: 0.25 }}>
               {element}: {formatDelta(value)}
-            </li>
+            </ListItem>
           ))}
-        </ul>
-      </td>
-      <td className="icon-cell cost-cell">
+        </List>
+      </TableCell>
+      <TableCell className="icon-cell cost-cell">
         <CostIcon codeMetadata={codeMetadata} />
-      </td>
-      <td className="icon-cell source-cell">
+      </TableCell>
+      <TableCell className="icon-cell source-cell">
         <SourceIcon codeMetadata={codeMetadata} />
-      </td>
-      <td className="citation-cell">
+      </TableCell>
+      <TableCell className="citation-cell">
         <CitationLink code={code} />
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   );
 };
 
@@ -84,48 +87,48 @@ const IncompleteMethodRow = ({ method, index, getCodeMetadata, elements }) => {
   const codeMetadata = getCodeMetadata(code);
   
   return (
-    <tr key={`incomplete-${index}`} className="category-incomplete">
-      <td>
+    <TableRow key={`incomplete-${index}`} className="category-incomplete">
+      <TableCell>
         {codeMetadata && codeMetadata.homepage ? (
-          <a 
+          <Link 
             href={codeMetadata.homepage} 
-            target="_blank" 
+            target="_blank"
             rel="noopener noreferrer"
             className="code-link"
-            title={`Visit ${code} homepage`}
+            underline="hover"
           >
             {code}
-          </a>
+          </Link>
         ) : (
           code
         )}
-      </td>
-      <td>{basis.display}</td>
-      <td>{pseudopotential}</td>
-      <td className="incomplete">
+      </TableCell>
+      <TableCell>{basis.display}</TableCell>
+      <TableCell>{pseudopotential}</TableCell>
+      <TableCell className="incomplete">
         <span className="no-data">N/A</span>
-      </td>
-      <td>
-        <ul className="delta-values-list">
+      </TableCell>
+      <TableCell>
+        <List dense className="delta-values-list">
           {elements.map(element => (
-            <li key={element}>
+            <ListItem key={element} disableGutters sx={{ py: 0.25 }}>
               {element}: {method.deltaValues && method.deltaValues[element] !== undefined ? 
                 formatDelta(method.deltaValues[element]) : 
                 <span className="missing-value">N/A</span>}
-            </li>
+            </ListItem>
           ))}
-        </ul>
-      </td>
-      <td className="icon-cell cost-cell">
+        </List>
+      </TableCell>
+      <TableCell className="icon-cell cost-cell">
         <CostIcon codeMetadata={codeMetadata} />
-      </td>
-      <td className="icon-cell source-cell">
+      </TableCell>
+      <TableCell className="icon-cell source-cell">
         <SourceIcon codeMetadata={codeMetadata} />
-      </td>
-      <td className="citation-cell">
+      </TableCell>
+      <TableCell className="citation-cell">
         <CitationLink code={code} />
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   );
 };
 
@@ -134,68 +137,70 @@ const IncompleteMethodRow = ({ method, index, getCodeMetadata, elements }) => {
  */
 const RankingsTable = ({ categories, categoryNames, incomplete, elements, getCodeMetadata }) => {
   return (
-    <table className="rankings-table">
-      <thead>
-        <tr>
-          <th>Code</th>
-          <th>Basis Set</th>
-          <th>Pseudopotential</th>
-          <th>Average Δ (meV/atom)</th>
-          <th>Δ per Element</th>
-          <th>Cost</th>
-          <th>Source</th>
-          <th>Citation Trend</th>
-        </tr>
-      </thead>
-      <tbody>
-        {/* Complete data sections */}
-        {categoryNames.map((categoryName, categoryIndex) => (
-          <React.Fragment key={categoryName}>
-            {categories[categoryName].map((method, index) => (
-              <MethodRow 
-                key={`method-${categoryName}-${index}`}
-                method={method}
-                categoryName={categoryName}
-                index={index}
-                categoryIndex={categoryIndex}
-                getCodeMetadata={getCodeMetadata}
-              />
-            ))}
-            {/* Add a spacer row except after the last category */}
-            {categoryIndex < categoryNames.length - 1 && (
-              <tr className="category-spacer">
-                <td colSpan="8"></td>
-              </tr>
-            )}
-          </React.Fragment>
-        ))}
-        
-        {/* Incomplete data section */}
-        {incomplete.length > 0 && (
-          <React.Fragment>
-            {/* Add a spacer row before incomplete section if there was complete data */}
-            {categoryNames.length > 0 && (
-              <tr className="category-spacer">
-                <td colSpan="8"></td>
-              </tr>
-            )}
-            {/* Add a label for the incomplete section */}
-            <tr className="category-label incomplete-label">
-              <td colSpan="8">Codes with missing data for some elements</td>
-            </tr>
-            {incomplete.map((method, index) => (
-              <IncompleteMethodRow 
-                key={`incomplete-${index}`}
-                method={method}
-                index={index}
-                getCodeMetadata={getCodeMetadata}
-                elements={elements}
-              />
-            ))}
-          </React.Fragment>
-        )}
-      </tbody>
-    </table>
+    <TableContainer>
+      <Table className="rankings-table" size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell>Code</TableCell>
+            <TableCell>Basis Set</TableCell>
+            <TableCell>Pseudopotential</TableCell>
+            <TableCell>Average Δ (meV/atom)</TableCell>
+            <TableCell>Δ per Element</TableCell>
+            <TableCell>Cost</TableCell>
+            <TableCell>Source</TableCell>
+            <TableCell>Citation Trend</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {/* Complete data sections */}
+          {categoryNames.map((categoryName, categoryIndex) => (
+            <React.Fragment key={categoryName}>
+              {categories[categoryName].map((method, index) => (
+                <MethodRow 
+                  key={`method-${categoryName}-${index}`}
+                  method={method}
+                  categoryName={categoryName}
+                  index={index}
+                  categoryIndex={categoryIndex}
+                  getCodeMetadata={getCodeMetadata}
+                />
+              ))}
+              {/* Add a spacer row except after the last category */}
+              {categoryIndex < categoryNames.length - 1 && (
+                <TableRow className="category-spacer">
+                  <TableCell colSpan={8}></TableCell>
+                </TableRow>
+              )}
+            </React.Fragment>
+          ))}
+          
+          {/* Incomplete data section */}
+          {incomplete.length > 0 && (
+            <React.Fragment>
+              {/* Add a spacer row before incomplete section if there was complete data */}
+              {categoryNames.length > 0 && (
+                <TableRow className="category-spacer">
+                  <TableCell colSpan={8}></TableCell>
+                </TableRow>
+              )}
+              {/* Add a label for the incomplete section */}
+              <TableRow className="category-label incomplete-label">
+                <TableCell colSpan={8}>Codes with missing data for some elements</TableCell>
+              </TableRow>
+              {incomplete.map((method, index) => (
+                <IncompleteMethodRow 
+                  key={`incomplete-${index}`}
+                  method={method}
+                  index={index}
+                  getCodeMetadata={getCodeMetadata}
+                  elements={elements}
+                />
+              ))}
+            </React.Fragment>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

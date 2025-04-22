@@ -1,4 +1,5 @@
 import React from 'react';
+import { Container, Typography, Paper, Box, Alert } from '@mui/material';
 import Disclaimer from './Disclaimer';
 import codesData from '../data/codes.json';
 import ColorLegend from './rankings/ColorLegend';
@@ -88,15 +89,17 @@ const CodeRankings = ({ rankings, elements, formula }) => {
   };
 
   return (
-    <div className="rankings-container">
-      <h2>Results for {formula}</h2>
+    <Container className="rankings-container" maxWidth="lg">
+      <Typography variant="h4" component="h2" gutterBottom>
+        Results for {formula}
+      </Typography>
       
       {(categoryNames.length > 0 || incomplete.length > 0) ? (
-        <>
-          {/* Enhanced color legend with descriptions */}
-          <ColorLegend />
+        <Paper elevation={2} sx={{ p: 2, mb: 4 }}>
+          <Box sx={{ mb: 2 }}>
+            <ColorLegend />
+          </Box>
           
-          {/* Main rankings table */}
           <RankingsTable 
             categories={categories} 
             categoryNames={categoryNames} 
@@ -104,14 +107,14 @@ const CodeRankings = ({ rankings, elements, formula }) => {
             elements={elements} 
             getCodeMetadata={getCodeMetadata} 
           />
-        </>
+        </Paper>
       ) : (
-        <div className="no-data-message">
-          <p>No methods found for these elements. Try another formula or include all-electron codes.</p>
-        </div>
+        <Alert severity="info" sx={{ my: 3 }}>
+          No methods found for these elements. Try another formula or include all-electron codes.
+        </Alert>
       )}
       <Disclaimer />
-    </div>
+    </Container>
   );
 };
 
