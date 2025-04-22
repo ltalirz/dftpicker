@@ -111,7 +111,8 @@
 }
 
 .trend-icon {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  color: #4a69bd;
   display: inline-block;
 }
 
@@ -410,4 +411,179 @@ tr.category-incomplete td:first-child {
   border-radius: 50%;
   margin-right: 5px;
   vertical-align: middle;
+}
+
+/* Cost and Source cell styles */
+.cost-cell,
+.source-cell {
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: 500;
+  width: 100px;
+}
+
+/* Cost labels */
+.free-cost {
+  color: #2e7d32;
+}
+
+.academic-cost {
+  color: #1976d2;
+}
+
+.commercial-cost {
+  color: #d32f2f;
+}
+
+.other-cost,
+.unknown-cost {
+  color: #757575;
+}
+
+/* Source labels */
+.open-source {
+  color: #2e7d32;
+}
+
+.available-source {
+  color: #1976d2;
+}
+
+.closed-source {
+  color: #d32f2f;
+}
+
+.other-source,
+.unknown-source {
+  color: #757575;
+}
+
+/* Update responsive adjustments for the new columns */
+@media (max-width: 1200px) {
+  .rankings-table th:nth-child(7),
+  .rankings-table td:nth-child(7) {
+    display: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .rankings-table th:nth-child(6),
+  .rankings-table td:nth-child(6) {
+    display: none;
+  }
+
+  .rankings-table th:nth-child(8),
+  .rankings-table td:nth-child(8) {
+    display: none;
+  }
+}
+
+/* Icon cell styling */
+.icon-cell {
+  text-align: center;
+  width: 60px;
+}
+
+/* Standard icon color and tooltip styling */
+.MuiSvgIcon-root {
+  color: #555 !important;
+  font-size: 1.2rem !important;
+}
+
+.tooltip-wrapper {
+  display: inline-block;
+}
+
+.mui-icon-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+}
+
+.citation-link .MuiSvgIcon-root {
+  color: #4a69bd !important;
+}
+
+.icons-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+
+.no-citation-data {
+  color: #999;
+  font-style: italic;
+  font-size: 0.9em;
+  display: inline-block;
+  padding: 4px 8px;
+}
+
+/* Remove the conflicting color styles that were overriding tooltips */
+.commercial-icon,
+.free-icon,
+.academic-icon,
+.open-icon,
+.available-icon,
+.closed-icon {
+  color: inherit;
+}
+
+/* Remove the old class definitions that are no longer needed */
+[title] {
+  position: relative;
+  cursor: help;
+}
+
+/* Remove the old Unicode icon styles that are no longer needed */
+.icon {
+  font-size: 1.2rem;
+  display: inline-block;
+  font-weight: bold;
+}
+
+/* New tooltip implementation */
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: max-content;
+  max-width: 250px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 12px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-weight: normal;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+.tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
 }
