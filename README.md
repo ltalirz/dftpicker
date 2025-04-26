@@ -1,6 +1,6 @@
 # DFT Code Picker
 
-A web application to help researchers find the most accurate Density Functional Theory (DFT) code for a particular chemical system.
+A web application to help researchers find accurate Density Functional Theory (DFT) codes for a particular chemical system.
 
 🔗 **Live demo**: [ltalirz.github.io/dftpicker](https://ltalirz.github.io/dftpicker)
 
@@ -16,8 +16,7 @@ With Claude Sonnet 3.7, the app was done in about 4 hours. Figuring out the uplo
 - Input a chemical formula or drag-and-drop structure files (XYZ, CIF)
 - Get ranked list of DFT codes based on their accuracy for the elements in your system
 - Toggle all-electron codes to compare with pseudopotential approaches
-- View citation trends for each DFT code via integration with atomistic.software
-- Compare delta values across different elements and methods
+- License and citation trends via integration with atomistic.software
 
 ## Data Source
 

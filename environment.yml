@@ -1,0 +1,6 @@
+name: dftpicker
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - nodejs =20.5.1
