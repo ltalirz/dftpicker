@@ -32,6 +32,6 @@
     "gh-pages": "^6.0.0",
     "jest": "^29.6.3",
     "jest-environment-jsdom": "^29.6.3",
-    "vite": "^6.3.2"
+    "vite": "^6.3.4"
   }
 }
